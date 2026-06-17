@@ -1,7 +1,7 @@
-streamlit==1.32.0
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==2.2.1+cpu
+torchvision==0.17.1+cpu
+streamlit
 numpy
 pillow
 matplotlib
-
-torch==2.2.2
-torchvision==0.17.2
