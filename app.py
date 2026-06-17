@@ -15,7 +15,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 # SETUP PATHS
 # ============================================
 DATASETS_PATH = Path("datasets")
-TEST_PATH = DATASETS_PATH / "MahadevanData_Raw" / "images_evaluation"
+TEST_PATH = Path("Git_file/few-shot-ivc-master/few-shot-ivc-master/datasets/MahadevanData_Raw/images_evaluation")
 
 st.set_page_config(page_title="Indus Valley Script Recognizer", layout="wide")
 
