@@ -1,33 +1,4 @@
 import streamlit as st
-import subprocess
-import sys
-
-# ============================================
-# 1. GATEKEEPER DEPENDENCY INSTALLATION (MUST BE FIRST)
-# ============================================
-@st.cache_resource
-def install_dependencies():
-    """Forces light-weight CPU torch installation on cloud container startup."""
-    try:
-        import torch
-        import torchvision
-    except ImportError:
-        with st.spinner("⏳ Configuring environment... Downloading lightweight PyTorch CPU binaries. This takes a minute on first boot."):
-            # Install CPU-specific torch directly using the official index URL
-            subprocess.check_call([
-                sys.executable, "-m", "pip", "install", 
-                "torch==2.2.1", "torchvision==0.17.1", 
-                "--index-url", "https://download.pytorch.org/whl/cpu"
-            ])
-            st.success("🎉 Environment configured successfully! Reloading script...")
-            st.rerun()
-
-# Run this check immediately before importing torch globally
-install_dependencies()
-
-# ============================================
-# 2. STANDARD REPO IMPORTS (SAFE TO RUN NOW)
-# ============================================
 import os
 import torch
 import torch.nn as nn
@@ -41,7 +12,7 @@ from pathlib import Path
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 # ============================================
-# 3. SETUP PATHS
+# SETUP PATHS
 # ============================================
 DATASETS_PATH = Path("datasets")
 TEST_PATH = DATASETS_PATH / "MahadevanData_Raw" / "images_evaluation"
@@ -53,7 +24,7 @@ st.markdown("### Few-Shot Learning with Prototypical Networks")
 st.markdown("Trained on Greek → Applied to Indus Valley Script")
 
 # ============================================
-# 4. LOAD MODEL
+# LOAD MODEL
 # ============================================
 
 @st.cache_resource
@@ -119,7 +90,7 @@ def load_model():
     return model
 
 # ============================================
-# 5. LOAD SUPPORT EXAMPLES
+# LOAD SUPPORT EXAMPLES
 # ============================================
 
 def load_support_examples(n_shot=5):
@@ -162,7 +133,7 @@ def load_support_examples(n_shot=5):
         return None, None, None, None
 
 # ============================================
-# 6. PREDICT FUNCTION
+# PREDICT FUNCTION
 # ============================================
 
 def predict_image(model, uploaded_image, support_images, support_labels, class_names):
@@ -181,7 +152,7 @@ def predict_image(model, uploaded_image, support_images, support_labels, class_n
     return class_names[pred_class], confidence, all_probs
 
 # ============================================
-# 7. SIDEBAR
+# SIDEBAR
 # ============================================
 
 st.sidebar.title("📊 Results Summary")
@@ -206,7 +177,7 @@ st.sidebar.markdown("""
 """)
 
 # ============================================
-# 8. MAIN CONTENT
+# MAIN CONTENT
 # ============================================
 
 tab1, tab2, tab3 = st.tabs(["🔍 Test Your Own Image", "📊 Training Results", "ℹ️ About"])
